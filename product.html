@@ -1,0 +1,162 @@
+<!-- product.html -->
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Detalle del Producto</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+            .product-card {
+                max-width: 800px;
+                margin: auto;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                border: none;
+                border-radius: 16px;
+                overflow: hidden;
+            }
+            .product-img {
+                border-radius: 16px 16px 0 0;
+                object-fit: cover;
+                height: 400px;
+            }
+            .product-info {
+                padding: 2rem;
+            }
+            .price-tag {
+                font-size: 1.5rem;
+                color: #28a745;
+                font-weight: bold;
+            }
+            .category-tag {
+                background-color: #dee2e6;
+                padding: 0.3rem 0.7rem;
+                border-radius: 12px;
+                font-size: 0.9rem;
+                margin-top: 1rem;
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html"><i class="fa-solid fa-music"></i> SampleStore</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="catalog.html">Catálogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Ofertas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contacto</a>
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-light" id="cart-btn">
+                        <i class="fa-solid fa-cart-shopping"></i> <span id="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container my-5" id="product-detail">
+            <!-- Producto se cargará aquí -->
+        </div>
+
+        <!-- Modal de carrito -->
+        <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cartModalLabel"><i class="fa-solid fa-cart-shopping"></i> Carrito de Compras</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body" id="cart-items"></div>
+                    <div class="modal-footer">
+                        <h5>Total: $<span id="cart-total">0</span></h5>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-dark text-light pt-4 mt-5">
+            <div class="container">
+                <div class="row">
+                    <!-- Sección de navegación -->
+                    <div class="col-md-4 mb-3">
+                        <h5>SampleStore</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+                            <li><a href="#" class="text-light text-decoration-none">Productos</a></li>
+                            <li><a href="#" class="text-light text-decoration-none">Contacto</a></li>
+                            <li><a href="#" class="text-light text-decoration-none">Sobre nosotros</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Sección de redes sociales -->
+                    <div class="col-md-4 mb-3">
+                        <h5>Síguenos</h5>
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+
+                    <!-- Sección de contacto -->
+                    <div class="col-md-4 mb-3">
+                        <h5>Contacto</h5>
+                        <p class="mb-1"><i class="fas fa-envelope me-2"></i> contacto@samplestore.com</p>
+                        <p class="mb-1"><i class="fas fa-phone me-2"></i> +56 9 1234 5678</p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> Santiago, Chile</p>
+                    </div>
+                </div>
+
+                <div class="text-center border-top border-secondary pt-3 pb-2 mt-3">
+                    <small>&copy; 2025 SampleStore. Todos los derechos reservados.</small>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="script.js"></script>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id'));
+            const product = products.find(p => p.id === id);
+            const container = document.getElementById('product-detail');
+
+            if (product) {
+                container.innerHTML = `
+                    <div class="card product-card">
+                        <img src="${product.image}" class="product-img w-100" alt="${product.name}">
+                        <div class="product-info">
+                            <h2 class="card-title">${product.name}</h2>
+                            <p class="price-tag">$${product.price}</p>
+                            <span class="category-tag">${product.category}</span>
+                            <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Este es un excelente pack para tus producciones musicales.</p>
+                            <button class="btn btn-primary mt-3" onclick="addToCart(${product.id})">
+                                <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<div class="alert alert-danger text-center">Producto no encontrado</div>`;
+            }
+        </script>
+        <script src="script.js"></script>
+    </body>
+</html>
